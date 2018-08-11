@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Let It Ride</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Ionic Menu Starter</h3>
+
+  <p>
+    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
+  </p>
+
+  <ion-item>
+    <ion-label>Bet</ion-label>
+    <ion-input [(ngModel)]="betBasic"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Three Card</ion-label>
+    <ion-input [(ngModel)]="betThreeCard"></ion-input>
+  </ion-item>
+
+  <button ion-button primary (click)=startPlay()>Play</button>
+</ion-content>
