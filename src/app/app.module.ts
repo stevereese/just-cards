@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { PlayPage } from '../pages/play/play';
 import { ListPage } from '../pages/list/list';
 import { PayTablePage } from '../pages/pay-table/pay-table'
+import { CardComponent } from '../components/card/card'
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,7 +18,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     PlayPage,
     ListPage,
-    PayTablePage
+    PayTablePage,
+    CardComponent
   ],
   imports: [
     BrowserModule,

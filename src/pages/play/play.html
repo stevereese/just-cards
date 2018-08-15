@@ -23,5 +23,17 @@
     <ion-input [(ngModel)]="betThreeCard"></ion-input>
   </ion-item>
 
-  <button ion-button primary (click)=startPlay()>Play</button>
+  <card [card]="testCard"></card>
+  <div *ngIf="isPlaying">
+    <ion-item *ngFor="let card of playerCards">
+      {{card.suit}},{{card.rank}}
+    </ion-item>
+  </div>
+  <div *ngIf="!isPlaying">
+    <button ion-button primary (click)=startPlay()>Play</button>
+  </div>
+  <div *ngIf="isPlaying">
+    <button ion-button primary (click)=startPlay()>Pull One Back</button>
+    <button ion-button primary (click)=startPlay()>Let It Ride</button>
+  </div>
 </ion-content>
