@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Card } from '../../models/card';
+import { Deck } from '../../models/deck';
 
 @Component({
   selector: 'page-play',
@@ -10,62 +11,96 @@ export class PlayPage {
   betBasic: number;
   betThreeCard: number;
   isPlaying: boolean;
-  deck: Array<{suit: string, rank: number}>;
-  playerCards: Array<{suit: string, rank: number}>;
-  testCard: Card;
+  cardsInPlay: number;
+  deck: Deck;
+  playerCards: Array<Card>;
+  dealerCards: Array<Card>;
+  playerBets: Array<number>;
+  playerWins: Array<number>;
 
   constructor(public navCtrl: NavController) {
     this.betBasic = 5;
     this.betThreeCard = 5;
     this.isPlaying = false;
-    this.testCard = new Card();
-    this.testCard.suit = "yoooo";
-    this.testCard.rank = 155;
+    this.cardsInPlay = 0;
 
-    this.buildDeck();
-    this.deck = this.shuffleDeck(this.deck);
-  }
+    // TODO initialization headaches
+    this.playerBets = [];
+    this.playerWins = [];
+    this.playerBets[0] = 0;
+    this.playerBets[1] = 0;
+    this.playerBets[2] = 0;
+    this.playerBets[3] = 0;
 
-  buildDeck() {
-    this.deck = [];
-    let suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
-    for (let s = 0; s < suits.length; s++) {
-      for (let r = 1; r < 14; r++) {
-        this.deck.push({
-          suit: suits[s],
-          rank: r
-        });
-      }
-    }
-  }
-
-  shuffleDeck(array) {
-    let currentIndex = array.length;
-    let temporaryValue = 0;
-    let randomIndex = 0;
-
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
+    this.playerWins[0] = 0;
+    this.playerWins[1] = 0;
+    this.playerWins[2] = 0;
+    this.playerWins[3] = 0;
   }
 
   startPlay() {
     this.isPlaying = true;
-    this.betBasic++;
     this.playerCards = [];
-    this.deck = this.shuffleDeck(this.deck);
+    this.dealerCards = [];
+    this.playerBets = [];
+    this.playerWins = [];
 
-    this.playerCards.push(this.deck[0]);
-    this.playerCards.push(this.deck[1]);
-    this.playerCards.push(this.deck[2]);
+    this.deck = new Deck();
+    this.deck.shuffle();
+
+    // lock in bets
+    this.playerBets[0] = this.betBasic;
+    this.playerBets[1] = this.betBasic;
+    this.playerBets[2] = this.betBasic;
+    this.playerBets[3] = this.betThreeCard;
+
+    this.playerWins[0] = 0;
+    this.playerWins[1] = 0;
+    this.playerWins[2] = 0;
+    this.playerWins[3] = 0;
+
+    // dealer cards first
+    this.dealerCards.push(this.deck.dealOne());
+    this.dealerCards.push(this.deck.dealOne());
+
+    // player cards
+    this.playerCards.push(this.deck.dealOne());
+    this.playerCards.push(this.deck.dealOne());
+    this.playerCards.push(this.deck.dealOne());
+
+    // TODO wait a tiny bit before flipping
+    this.playerCards[0].flip();
+    this.playerCards[1].flip();
+    this.playerCards[2].flip();
+
+    this.cardsInPlay = 3;
+  }
+
+  pullOneBack() {
+    if (this.cardsInPlay == 3) {
+      this.playerBets[2] = 0;
+    } else if (this.cardsInPlay == 4) {
+      this.playerBets[1] = 0;
+    }
+    this.advance();
+  }
+
+  letItRide() {
+    this.advance();
+  }
+
+  advance() {
+    if (this.cardsInPlay == 3) {
+      this.dealerCards[1].flip();
+      this.cardsInPlay++;
+    } else if (this.cardsInPlay == 4) {
+      this.dealerCards[0].flip();
+      this.cardsInPlay++;
+    }
+
+    if (this.cardsInPlay == 5) {
+      // TODO: calculate hand
+      this.isPlaying = false;
+    }
   }
 }

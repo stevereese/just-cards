@@ -1,3 +1,22 @@
-card {
-
+.card-frame {
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  height: 60px;
+  width: 60px;
+}
+.red {
+  border-color: red;
+  color: red;
+}
+.black {
+  border-color: black;
+  color: black;
+}
+.top-left {
+  vertical-align: text-top;
+}
+.bottom-right {
+  text-align: right;
+  vertical-align: text-bottom;
 }

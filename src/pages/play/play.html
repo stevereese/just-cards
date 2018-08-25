@@ -23,17 +23,26 @@
     <ion-input [(ngModel)]="betThreeCard"></ion-input>
   </ion-item>
 
-  <card [card]="testCard"></card>
-  <div *ngIf="isPlaying">
-    <ion-item *ngFor="let card of playerCards">
-      {{card.suit}},{{card.rank}}
-    </ion-item>
+  <let-it-ride-chip-area [bets]="playerBets" [wins]="playerWins">
+  </let-it-ride-chip-area>
+
+  <div *ngIf="cardsInPlay != 0">
+    <span *ngFor="let card of dealerCards">
+      <card [card]="card"></card>
+    </span>
   </div>
+  <ion-grid *ngIf="cardsInPlay != 0">
+    <ion-row>
+      <ion-col *ngFor="let card of playerCards">
+        <card [card]="card"></card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <div *ngIf="!isPlaying">
     <button ion-button primary (click)=startPlay()>Play</button>
   </div>
-  <div *ngIf="isPlaying">
-    <button ion-button primary (click)=startPlay()>Pull One Back</button>
-    <button ion-button primary (click)=startPlay()>Let It Ride</button>
+  <div *ngIf="isPlaying ">
+    <button ion-button primary (click)=pullOneBack()>Pull One Back</button>
+    <button ion-button primary (click)=letItRide()>Let It Ride</button>
   </div>
 </ion-content>

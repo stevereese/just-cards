@@ -1,5 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Card } from '../../models/card';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { faFish } from '@fortawesome/free-solid-svg-icons';
+import { faBullseye } from '@fortawesome/free-solid-svg-icons';
+import { faBomb } from '@fortawesome/free-solid-svg-icons';
+
 /**
  * Generated class for the CardComponent component.
  *
@@ -12,32 +17,45 @@ import { Card } from '../../models/card';
 })
 export class CardComponent {
 
+  faCoffee = faCoffee;
+  faFish = faFish;
+  faBullseye = faBullseye;
+  faBomb = faBomb;
+
   @Input() card: Card;
-  text: string;
-  shown: boolean;
-  rank: number;
-  suit: string;
 
   constructor() {
-    console.log('Hello CardComponent Component');
-    this.text = 'Hello World';
   }
 
-  rankDisplay() {
-    switch(this.rank) {
-      case 1: {
-        return "A";
-      } case 11: {
-        return "J";
-      } case 12: {
-        return "Q";
-      } case 13: {
-        return "K";
+  getIcon() {
+    switch(this.card.suit) {
+      case "Heart": {
+        return this.faFish;
+      } case "Diamond": {
+        return this.faBullseye;
+      } case "Spade": {
+        return this.faCoffee;
+      } case "Club": {
+        return this.faBomb;
       } default: {
-        return this.rank;
+        return null;
       }
     }
   }
 
-
+  getSuitColor() {
+    switch(this.card.suit) {
+      case "Heart": {
+        return "red";
+      } case "Diamond": {
+        return "red";
+      } case "Spade": {
+        return "black";
+      } case "Club": {
+        return "black";
+      } default: {
+        return null;
+      }
+    }
+  }
 }

@@ -1,4 +1,20 @@
 <!-- Generated template for the CardComponent component -->
-<div>
-  {{card.suit}},,,{{card.rank}}
+<ion-grid [ngClass]="getSuitColor()" class="card-frame" *ngIf="card.shown">
+  <ion-row>
+    <ion-col col-3 no-padding>
+      {{card.rank | RankToFace}}
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-6 offset-3 no-padding>
+      <fa-icon [icon]="getIcon()"></fa-icon>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-3 offset-9 no-padding>
+      {{card.rank | RankToFace}}
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<div class="card-frame" *ngIf="!card.shown">
 </div>
