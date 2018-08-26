@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Card } from '../../models/card';
 import { Deck } from '../../models/deck';
+import { LetItRide } from '../../models/let-it-ride';
+import { HistoryProvider} from '../../providers/history/history';
 
 @Component({
   selector: 'page-play',
@@ -17,8 +19,10 @@ export class PlayPage {
   dealerCards: Array<Card>;
   playerBets: Array<number>;
   playerWins: Array<number>;
+  result: string;
+  rules: LetItRide;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public historyService: HistoryProvider) {
     this.betBasic = 5;
     this.betThreeCard = 5;
     this.isPlaying = false;
@@ -36,6 +40,8 @@ export class PlayPage {
     this.playerWins[1] = 0;
     this.playerWins[2] = 0;
     this.playerWins[3] = 0;
+
+    this.rules = new LetItRide();
   }
 
   startPlay() {
@@ -68,6 +74,8 @@ export class PlayPage {
     this.playerCards.push(this.deck.dealOne());
     this.playerCards.push(this.deck.dealOne());
 
+    this.historyService.numHands++;
+
     // TODO wait a tiny bit before flipping
     this.playerCards[0].flip();
     this.playerCards[1].flip();
@@ -99,7 +107,13 @@ export class PlayPage {
     }
 
     if (this.cardsInPlay == 5) {
-      // TODO: calculate hand
+      let allCards: Array<Card> = [];
+      allCards.push(this.playerCards[0]);
+      allCards.push(this.playerCards[1]);
+      allCards.push(this.playerCards[2]);
+      allCards.push(this.dealerCards[0]);
+      allCards.push(this.dealerCards[1]);
+      this.result = this.rules.checkLetItRide(allCards);
       this.isPlaying = false;
     }
   }

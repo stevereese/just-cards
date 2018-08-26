@@ -45,4 +45,10 @@
     <button ion-button primary (click)=pullOneBack()>Pull One Back</button>
     <button ion-button primary (click)=letItRide()>Let It Ride</button>
   </div>
+  <div *ngIf="historyService.numHands > 0">
+    Hand #{{historyService.numHands}}
+  </div>
+  <div *ngIf="!isPlaying && historyService.numHands > 0">
+    {{result}}
+  </div>
 </ion-content>

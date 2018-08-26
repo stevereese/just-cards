@@ -16,6 +16,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HistoryProvider } from '../providers/history/history';
+import { PayTableProvider } from '../providers/pay-table/pay-table';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    HistoryProvider,
+    PayTableProvider
   ]
 })
 export class AppModule {}
