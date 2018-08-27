@@ -1,5 +1,5 @@
 <!-- Generated template for the ChipComponent component -->
-<fa-layers class="fa-fw" *ngIf="amount > 0">
+<fa-layers class="fa-fw" *ngIf="amount > 0" [ngClass]="type == 'win' ? 'win-slide' : ''">
   <fa-icon [icon]="faLifeRing" size="3x"></fa-icon>
   <fa-layers-text content="{{amount}}" style="text-align: center; color: red;" transform="right-13 shrink-1"></fa-layers-text>
 </fa-layers>

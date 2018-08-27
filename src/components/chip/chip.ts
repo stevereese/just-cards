@@ -15,6 +15,7 @@ export class ChipComponent {
 
   faLifeRing = faLifeRing;
   @Input() amount: number;
+  @Input() type: string;
 
   constructor() {
   }
